@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { EXPERIENCE, EDUCATION, CERTIFICATIONS } from '../constants';
-import { GitCommit, GitBranch, Terminal, Cpu, CheckCircle2 } from 'lucide-react';
+import { GitBranch, Terminal, Cpu, CheckCircle2 } from 'lucide-react';
 
 const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
   return (
@@ -9,7 +10,7 @@ const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      className="relative pl-8 md:pl-0 mb-12 md:mb-16 group"
+      className="relative pl-0 md:pl-0 mb-8 md:mb-16 group"
     >
       {/* Desktop Layout */}
       <div className={`hidden md:flex items-start justify-between gap-12 ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}>
@@ -45,15 +46,17 @@ const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
         </div>
       </div>
 
-      {/* Mobile Layout */}
-      <div className="md:hidden relative border-l-2 border-slate-800 pl-8 pb-8">
-        <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-dark ${type === 'work' ? 'border-secondary' : 'border-primary'}`} />
+      {/* Mobile Layout - Cleaned Up */}
+      <div className="md:hidden relative border-l-[2px] border-slate-800/50 ml-3 pl-8 pb-10">
+        <div className={`absolute -left-[7px] top-1 w-3.5 h-3.5 rounded-full border-2 bg-dark z-10 ${type === 'work' ? 'border-secondary' : 'border-primary'}`} />
         
-        <span className="text-xs font-mono text-primary mb-1 block">{date}</span>
-        <h3 className="text-lg font-bold text-white">{title}</h3>
-        <p className="text-sm text-slate-500 mb-4 font-mono">{subtitle}</p>
+        <div className="mb-2">
+            <span className="inline-block text-[10px] font-mono text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20 mb-1.5">{date}</span>
+            <h3 className="text-lg font-bold text-white leading-tight">{title}</h3>
+            <p className="text-sm text-slate-500 font-mono mt-0.5">{subtitle}</p>
+        </div>
         
-        <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-lg text-sm text-slate-300">
+        <div className="p-4 bg-slate-900/40 border border-slate-800/60 rounded-lg text-sm text-slate-300 shadow-sm">
            {children}
         </div>
       </div>
@@ -63,7 +66,7 @@ const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
 
 const Timeline: React.FC = () => {
   return (
-    <section className="py-32 px-4 bg-dark relative overflow-hidden scroll-mt-20" id="experience">
+    <section className="py-20 md:py-32 px-4 bg-dark relative overflow-hidden scroll-mt-10" id="experience">
       {/* Circuit Pattern Background */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ 
         backgroundImage: 'radial-gradient(#4f4f4f 1px, transparent 1px)', 
@@ -76,16 +79,16 @@ const Timeline: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-24"
+          className="text-center mb-12 md:mb-24"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/20 text-xs font-mono mb-4">
             <GitBranch size={14} />
             <span>SYSTEM VERSION HISTORY</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6">
             Evolution <span className="text-slate-700">Log</span>
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto font-light">
+          <p className="text-slate-400 max-w-xl mx-auto font-light text-sm md:text-base px-2">
             A chronological record of system upgrades, knowledge acquisition, and deployed professional experiences.
           </p>
         </motion.div>
@@ -106,9 +109,9 @@ const Timeline: React.FC = () => {
              >
                 <ul className="space-y-2">
                   {exp.description.map((desc, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-secondary mt-1.5 text-[10px]">➜</span>
-                      {desc}
+                    <li key={i} className="flex items-start gap-2 text-xs md:text-sm">
+                      <span className="text-secondary mt-1 text-[10px]">➜</span>
+                      <span>{desc}</span>
                     </li>
                   ))}
                 </ul>
@@ -130,8 +133,8 @@ const Timeline: React.FC = () => {
              type="edu"
              index={1}
            >
-             <p>Advanced system architecture studies. Focusing on Microservices, Cloud Computing, and Distributed Systems.</p>
-             <div className="mt-3 flex items-center gap-2 text-xs text-primary">
+             <p className="text-xs md:text-sm">Advanced system architecture studies. Focusing on Microservices, Cloud Computing, and Distributed Systems.</p>
+             <div className="mt-3 flex items-center gap-2 text-xs text-primary font-bold">
                 <CheckCircle2 size={12} /> <span>Status: IN_PROGRESS</span>
              </div>
            </LogEntry>
@@ -144,7 +147,7 @@ const Timeline: React.FC = () => {
              type="edu"
              index={2}
            >
-             <p>Intensive foundational programming cycles. Core logic algorithms and data structures initialized.</p>
+             <p className="text-xs md:text-sm">Intensive foundational programming cycles. Core logic algorithms and data structures initialized.</p>
            </LogEntry>
 
            {/* 4. Certifications (Parallel Branch) */}
@@ -152,22 +155,22 @@ const Timeline: React.FC = () => {
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
-             className="mt-20 p-8 bg-gradient-to-r from-slate-900 to-slate-950 rounded-2xl border border-slate-800 relative overflow-hidden"
+             className="mt-12 md:mt-20 p-6 md:p-8 bg-gradient-to-r from-slate-900 to-slate-950 rounded-2xl border border-slate-800 relative overflow-hidden"
            >
              <div className="absolute top-0 right-0 p-4 opacity-20">
-               <Cpu size={100} />
+               <Cpu size={80} />
              </div>
              
-             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+             <h3 className="text-lg md:text-xl font-bold text-white mb-6 flex items-center gap-2">
                <Terminal size={20} className="text-green-500" />
                Additional Patches & Certificates
              </h3>
              
-             <div className="flex flex-wrap gap-4 relative z-10">
+             <div className="flex flex-wrap gap-3 md:gap-4 relative z-10">
                {CERTIFICATIONS.map((cert, i) => (
-                 <div key={i} className="px-4 py-2 bg-black/40 border border-slate-700 rounded-lg hover:border-green-500/50 hover:text-green-400 transition-colors cursor-default flex items-center gap-2">
-                   <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                   <span className="text-sm font-mono">{cert}</span>
+                 <div key={i} className="px-3 py-2 bg-black/40 border border-slate-700 rounded-lg hover:border-green-500/50 hover:text-green-400 transition-colors cursor-default flex items-center gap-2 text-xs md:text-sm">
+                   <div className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />
+                   <span className="font-mono">{cert}</span>
                  </div>
                ))}
              </div>

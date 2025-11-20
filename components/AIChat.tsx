@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Send, X, Minus, Maximize2, ChevronRight } from 'lucide-react';
 import { sendMessageToGemini } from '../services/geminiService';
+import { useSound } from './SoundController';
+import { useAchievements } from './Achievements';
 
 interface Message {
   id: string;
@@ -17,6 +19,9 @@ const AIChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  const { playClick, playHover } = useSound();
+  const { unlockAchievement } = useAchievements();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -26,9 +31,19 @@ const AIChat: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  const toggleChat = () => {
+    playClick();
+    const newState = !isOpen;
+    setIsOpen(newState);
+    if (newState) {
+        unlockAchievement('HACKER');
+    }
+  };
+
   const handleSend = async () => {
     if (!input.trim()) return;
 
+    playClick(); // Typing sound for send
     const userMessage: Message = { id: Date.now().toString(), sender: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
@@ -52,7 +67,8 @@ const AIChat: React.FC = () => {
     <>
       {/* Trigger Button - Retro Terminal Icon */}
       <motion.button
-        onClick={() => setIsOpen(true)}
+        onClick={toggleChat}
+        onMouseEnter={playHover}
         className={`fixed bottom-6 right-6 z-50 p-4 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.3)] bg-black border border-green-500/50 text-green-500 ${isOpen ? 'hidden' : 'flex'} items-center gap-2 group hover:bg-green-900/20 transition-colors`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -79,7 +95,7 @@ const AIChat: React.FC = () => {
               <div className="flex items-center gap-2">
                  <button className="hover:text-green-400 text-slate-500 transition-colors"><Minus size={14} /></button>
                  <button className="hover:text-green-400 text-slate-500 transition-colors"><Maximize2 size={12} /></button>
-                 <button onClick={() => setIsOpen(false)} className="hover:text-red-500 text-slate-500 transition-colors"><X size={14} /></button>
+                 <button onClick={toggleChat} className="hover:text-red-500 text-slate-500 transition-colors"><X size={14} /></button>
               </div>
             </div>
 

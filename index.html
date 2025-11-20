@@ -11,12 +11,12 @@
         theme: {
           extend: {
             colors: {
-              primary: '#0ea5e9', // Sky 500
-              secondary: '#6366f1', // Indigo 500
-              accent: '#10b981', // Emerald 500 (for success/terminal states)
-              dark: '#0b1121', // Deep Slate
-              darker: '#020617', // Slate 950
-              surface: '#1e293b', // Slate 800
+              primary: '#0088ff', // Electric Azure
+              secondary: '#00d9ff', // Holographic Cyan
+              accent: '#fcee0a', // Acid Yellow
+              dark: '#02040a', // Void Navy
+              darker: '#000000', // True Black
+              surface: '#0f172a', // Slate Surface
               'code-bg': '#0d1117',
             },
             fontFamily: {
@@ -25,16 +25,27 @@
             },
             backgroundImage: {
               'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+              'cyber-grid': "linear-gradient(0deg, transparent 24%, rgba(0, 217, 255, .1) 25%, rgba(0, 217, 255, .1) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, .1) 75%, rgba(0, 217, 255, .1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 217, 255, .1) 25%, rgba(0, 217, 255, .1) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, .1) 75%, rgba(0, 217, 255, .1) 76%, transparent 77%, transparent)"
             },
             animation: {
-              'spin-slow': 'spin 12s linear infinite',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'blink': 'blink 1s step-end infinite',
+              'spin-slow': 'spin 8s linear infinite',
+              'spin-reverse-slow': 'spin-reverse 10s linear infinite',
+              'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 3s ease-in-out infinite',
+              'scan': 'scan 1.5s linear infinite',
             },
             keyframes: {
-              blink: {
-                '0%, 100%': { opacity: '1' },
-                '50%': { opacity: '0' },
+              'spin-reverse': {
+                '0%': { transform: 'rotate(360deg)' },
+                '100%': { transform: 'rotate(0deg)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              scan: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' },
               }
             }
           },
@@ -46,9 +57,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
       body {
-        background-color: #020617;
+        background-color: #02040a;
         color: #f8fafc;
         overflow-x: hidden;
+        cursor: none; /* Hide default cursor for custom one */
       }
       
       /* 3D Utilities */
@@ -59,22 +71,11 @@
       
       /* Scrollbar */
       ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: #020617; }
-      ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-      ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+      ::-webkit-scrollbar-track { background: #02040a; }
+      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #0088ff; }
       
-      /* Glass & Cyberpunk Effects */
-      .glass-panel {
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(148, 163, 184, 0.1);
-      }
-      
-      .neon-glow {
-        box-shadow: 0 0 10px rgba(14, 165, 233, 0.3), 0 0 20px rgba(14, 165, 233, 0.1);
-      }
-
-      /* CRT Scanline Effect */
+      /* CRT/Scanline Global Effects */
       .scanlines::before {
         content: " ";
         display: block;
@@ -87,6 +88,19 @@
         z-index: 9999;
         background-size: 100% 2px, 3px 100%;
         pointer-events: none;
+        opacity: 0.4;
+      }
+
+      .text-glow {
+        text-shadow: 0 0 10px rgba(0, 136, 255, 0.5), 0 0 20px rgba(0, 136, 255, 0.3);
+      }
+      
+      .cyber-card {
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+      }
+      
+      .cyber-card-inverse {
+        clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
       }
     </style>
     <script type="importmap">
@@ -97,7 +111,8 @@
         "react/": "https://aistudiocdn.com/react@^19.2.0/",
         "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
         "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
-        "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+        "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+        "jspdf": "https://aistudiocdn.com/jspdf@^2.5.1"
       }
     }
     </script>
