@@ -19,7 +19,7 @@ const AIChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   const { playClick, playHover } = useSound();
   const { unlockAchievement } = useAchievements();
 
@@ -36,7 +36,7 @@ const AIChat: React.FC = () => {
     const newState = !isOpen;
     setIsOpen(newState);
     if (newState) {
-        unlockAchievement('HACKER');
+      unlockAchievement('HACKER');
     }
   };
 
@@ -50,7 +50,7 @@ const AIChat: React.FC = () => {
     setIsThinking(true);
 
     const responseText = await sendMessageToGemini(input);
-    
+
     setIsThinking(false);
     // Clean formatting slightly for terminal look
     setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', text: `> ${responseText}` }]);
@@ -69,7 +69,7 @@ const AIChat: React.FC = () => {
       <motion.button
         onClick={toggleChat}
         onMouseEnter={playHover}
-        className={`fixed bottom-6 right-6 z-50 p-4 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.3)] bg-black border border-green-500/50 text-green-500 ${isOpen ? 'hidden' : 'flex'} items-center gap-2 group hover:bg-green-900/20 transition-colors`}
+        className={`fixed bottom-24 md:bottom-6 right-6 z-50 p-4 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.3)] bg-black border border-green-500/50 text-green-500 ${isOpen ? 'hidden' : 'flex'} items-center gap-2 group hover:bg-green-900/20 transition-colors`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -93,9 +93,9 @@ const AIChat: React.FC = () => {
                 <span className="text-xs text-green-500/80 font-bold">root@oussama-portfolio:~</span>
               </div>
               <div className="flex items-center gap-2">
-                 <button className="hover:text-green-400 text-slate-500 transition-colors"><Minus size={14} /></button>
-                 <button className="hover:text-green-400 text-slate-500 transition-colors"><Maximize2 size={12} /></button>
-                 <button onClick={toggleChat} className="hover:text-red-500 text-slate-500 transition-colors"><X size={14} /></button>
+                <button className="hover:text-green-400 text-slate-500 transition-colors"><Minus size={14} /></button>
+                <button className="hover:text-green-400 text-slate-500 transition-colors"><Maximize2 size={12} /></button>
+                <button onClick={toggleChat} className="hover:text-red-500 text-slate-500 transition-colors"><X size={14} /></button>
               </div>
             </div>
 
@@ -107,30 +107,29 @@ const AIChat: React.FC = () => {
                   className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
                 >
                   <div className="flex items-center gap-2 mb-1">
-                     <span className="text-[10px] text-slate-500 uppercase">{msg.sender === 'user' ? 'GUEST' : 'SYSTEM'}</span>
-                     <span className="text-[10px] text-slate-600">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                    <span className="text-[10px] text-slate-500 uppercase">{msg.sender === 'user' ? 'GUEST' : 'SYSTEM'}</span>
+                    <span className="text-[10px] text-slate-600">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                   </div>
                   <div
-                    className={`max-w-[90%] p-3 text-sm rounded border ${
-                      msg.sender === 'user'
+                    className={`max-w-[90%] p-3 text-sm rounded border ${msg.sender === 'user'
                         ? 'bg-slate-900 border-slate-700 text-slate-300'
                         : 'bg-green-900/10 border-green-500/20 text-green-400'
-                    }`}
+                      }`}
                   >
-                     {msg.text.split('\n').map((line, i) => (
-                        <React.Fragment key={i}>
-                            {line}
-                            {i !== msg.text.split('\n').length - 1 && <br />}
-                        </React.Fragment>
+                    {msg.text.split('\n').map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        {i !== msg.text.split('\n').length - 1 && <br />}
+                      </React.Fragment>
                     ))}
                   </div>
                 </div>
               ))}
-              
+
               {isThinking && (
                 <div className="flex items-center gap-2 text-green-500/50 text-xs animate-pulse">
-                   <ChevronRight size={12} />
-                   <span>PROCESSING_REQUEST...</span>
+                  <ChevronRight size={12} />
+                  <span>PROCESSING_REQUEST...</span>
                 </div>
               )}
               <div ref={messagesEndRef} />

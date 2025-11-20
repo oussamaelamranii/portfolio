@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { ExternalLink, Zap, Globe, Server, FolderGit2 } from 'lucide-react';
+import { ExternalLink, Zap, Globe, Server, FolderGit2, Github } from 'lucide-react';
 
 const Projects: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Projects: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -25,7 +25,7 @@ const Projects: React.FC = () => {
             </span>
             ACTIVE MISSIONS
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-6xl font-heading font-bold text-white mb-4">
             Deployed <span className="text-white">Operations</span>
           </h2>
           <p className="text-slate-400 font-mono text-sm">
@@ -44,56 +44,65 @@ const Projects: React.FC = () => {
               whileHover={{ y: -8 }}
               className="group h-full"
             >
-              <div className="h-full flex flex-col bg-slate-900 border border-slate-800 rounded-xl overflow-hidden group-hover:border-primary/50 group-hover:shadow-[0_0_30px_rgba(0,136,255,0.15)] transition-all duration-200">
-                
-                {/* Card Header - Code Editor Tab */}
-                <div className="bg-slate-950 border-b border-slate-800 p-3 flex items-center justify-between">
-                   <div className="flex items-center gap-2">
-                      <FolderGit2 size={14} className="text-slate-500" />
-                      <span className="text-xs font-mono text-slate-400 truncate max-w-[150px]">~/{project.title.toLowerCase().replace(/\s+/g, '-')}</span>
-                   </div>
-                   <div className="flex gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-slate-800 group-hover:bg-red-500/50 transition-colors" />
-                      <div className="w-2 h-2 rounded-full bg-slate-800 group-hover:bg-yellow-500/50 transition-colors" />
-                   </div>
+              <div className="relative h-full bg-surface border border-slate-800 rounded-xl overflow-hidden group hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(99,102,241,0.2)] flex flex-col">
+
+                {/* Image Section */}
+                <div className="relative h-48 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+
+                  {/* Overlay Actions */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 z-20 backdrop-blur-sm">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-white text-black rounded-full hover:scale-110 transition-transform"
+                      title="View Code"
+                    >
+                      <Github size={20} />
+                    </a>
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-primary text-white rounded-full hover:scale-110 transition-transform shadow-lg shadow-primary/50"
+                      title="Live Demo"
+                    >
+                      <ExternalLink size={20} />
+                    </a>
+                  </div>
                 </div>
 
-                {/* Body */}
-                <div className="p-5 md:p-6 flex-1 flex flex-col">
+                {/* Content Section */}
+                <div className="p-6 flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-4">
-                    <div className="flex-1 pr-2">
-                       <span className="text-[10px] font-mono text-primary mb-1 block uppercase tracking-wider">{project.category} MODULE</span>
-                       <h3 className="text-lg md:text-xl font-bold text-white leading-tight group-hover:text-primary transition-colors">{project.title}</h3>
-                    </div>
-                    {project.status === 'In Progress' ? (
-                       <div className="flex-shrink-0 px-2 py-1 rounded bg-yellow-500/10 text-yellow-500 text-[10px] font-bold border border-yellow-500/20 flex items-center gap-1">
-                         <Zap size={10} /> BUILDING
-                       </div>
-                    ) : (
-                       <div className="flex-shrink-0 px-2 py-1 rounded bg-green-500/10 text-green-500 text-[10px] font-bold border border-green-500/20 flex items-center gap-1">
-                         <Globe size={10} /> LIVE
-                       </div>
+                    <h3 className="text-xl font-heading font-bold text-white group-hover:text-primary transition-colors">{project.title}</h3>
+                    <span className="text-xs font-mono text-slate-500 border border-slate-800 px-2 py-1 rounded bg-slate-900/50">
+                      {project.year || '2024'}
+                    </span>
+                  </div>
+
+                  <p className="text-slate-400 text-sm mb-6 leading-relaxed flex-1">
+                    {project.description[0]}
+                  </p>
+
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tech.slice(0, 3).map((t, i) => (
+                      <span key={i} className="text-[10px] font-mono text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20">
+                        {t}
+                      </span>
+                    ))}
+                    {project.tech.length > 3 && (
+                      <span className="text-[10px] font-mono text-slate-500 px-2 py-1">
+                        +{project.tech.length - 3}
+                      </span>
                     )}
-                  </div>
-
-                  <div className="space-y-3 mb-6 flex-1">
-                     {project.description.map((desc, i) => (
-                       <p key={i} className="text-sm text-slate-400 leading-relaxed border-l border-slate-800 pl-3">
-                         {desc}
-                       </p>
-                     ))}
-                  </div>
-
-                  {/* Tech Footer */}
-                  <div className="pt-4 border-t border-slate-800 flex flex-wrap gap-2">
-                     {project.tech.slice(0, 5).map((t) => (
-                        <span key={t} className="text-[10px] font-mono text-slate-500 bg-slate-950 px-2 py-1 rounded border border-slate-800 group-hover:text-white group-hover:border-slate-600 transition-colors">
-                           {t}
-                        </span>
-                     ))}
-                     {project.tech.length > 5 && (
-                        <span className="text-[10px] font-mono text-slate-600 px-1 py-1">+{project.tech.length - 5}</span>
-                     )}
                   </div>
                 </div>
               </div>

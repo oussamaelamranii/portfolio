@@ -24,7 +24,7 @@ const AppContent = () => {
     const handleScroll = () => {
       const scrolled = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      
+
       // Show top button
       if (scrolled > 400) {
         setShowTopBtn(true);
@@ -71,10 +71,10 @@ const AppContent = () => {
   return (
     <div className="min-h-screen bg-darker text-slate-200 font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden relative cursor-none pb-20 md:pb-0">
       <CustomCursor />
-      
+
       {/* Global 3D Background */}
       <Background />
-      
+
       {/* Command Palette */}
       <CommandPalette />
 
@@ -89,22 +89,10 @@ const AppContent = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-8 text-xs font-mono text-slate-400 uppercase tracking-widest">
-            <button onClick={() => handleNavClick('skills')} className="hover:text-primary transition-colors flex items-center gap-1"><Code2 size={12}/> Stack</button>
-            <button onClick={() => handleNavClick('experience')} className="hover:text-primary transition-colors flex items-center gap-1"><Terminal size={12}/> Log</button>
-            <button onClick={() => handleNavClick('projects')} className="hover:text-primary transition-colors flex items-center gap-1"><Github size={12}/> Repos</button>
-          </div>
-          
-          {/* Command Hint / Search Button */}
-          <div className="flex items-center gap-2">
-             <button 
-               className="md:hidden p-2 text-slate-400 hover:text-white"
-               onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
-             >
-               <Search size={20} />
-             </button>
-             <div className="hidden lg:flex items-center gap-2 text-[10px] font-mono text-slate-600 bg-slate-900 px-2 py-1 rounded border border-slate-800 cursor-pointer hover:border-primary/50 transition-colors" onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}>
-               <span>CMD + K</span>
-             </div>
+            <button onClick={() => handleNavClick('skills')} className="hover:text-primary transition-colors flex items-center gap-1"><Code2 size={12} /> Stack</button>
+            <div className="hidden lg:flex items-center gap-2 text-[10px] font-mono text-slate-600 bg-slate-900 px-2 py-1 rounded border border-slate-800 cursor-pointer hover:border-primary/50 transition-colors" onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}>
+              <span>CMD + K</span>
+            </div>
           </div>
         </div>
       </nav>
@@ -123,11 +111,11 @@ const AppContent = () => {
             onClick={() => handleNavClick(item.id)}
             className={`relative flex flex-col items-center gap-1 p-2 transition-all duration-300 ${activeSection === item.id ? 'text-primary -translate-y-2' : 'text-slate-500 hover:text-slate-300'}`}
           >
-             <div className={`absolute inset-0 bg-primary/20 blur-lg rounded-full opacity-0 transition-opacity ${activeSection === item.id ? 'opacity-100' : ''}`} />
-             <item.icon size={20} className="relative z-10" strokeWidth={activeSection === item.id ? 2.5 : 2} />
-             {activeSection === item.id && (
-               <span className="text-[9px] font-bold font-mono relative z-10">{item.label}</span>
-             )}
+            <div className={`absolute inset-0 bg-primary/20 blur-lg rounded-full opacity-0 transition-opacity ${activeSection === item.id ? 'opacity-100' : ''}`} />
+            <item.icon size={20} className="relative z-10" strokeWidth={activeSection === item.id ? 2.5 : 2} />
+            {activeSection === item.id && (
+              <span className="text-[9px] font-bold font-mono relative z-10">{item.label}</span>
+            )}
           </button>
         ))}
       </div>
@@ -148,7 +136,7 @@ const AppContent = () => {
       <AIChat />
 
       {/* Scroll to top button (Desktop Only, mobile has nav) */}
-      <button 
+      <button
         onClick={scrollToTop}
         className={`hidden md:block fixed bottom-6 left-6 z-40 p-3 bg-primary/10 border border-primary/30 backdrop-blur rounded-lg text-primary hover:bg-primary hover:text-white transition-all ${showTopBtn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
       >

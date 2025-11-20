@@ -2,7 +2,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PROFILE } from '../constants';
-import { Send, Mail, MapPin, CheckCircle, Terminal, AlertCircle } from 'lucide-react';
+import { Send, Mail, MapPin, CheckCircle, Terminal, AlertCircle, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+// EmailJS Configuration - REPLACE THESE WITH YOUR ACTUAL KEYS
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -12,26 +18,40 @@ const Contact: React.FC = () => {
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    
-    // Simulate processing time - faster
-    setTimeout(() => {
-      const mailtoLink = `mailto:${PROFILE.email}?subject=${encodeURIComponent(formState.subject)}&body=${encodeURIComponent(`Name: ${formState.name}\n\n${formState.message}`)}`;
-      window.location.href = mailtoLink;
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formState.name,
+          subject: formState.subject,
+          message: formState.message,
+          reply_to: PROFILE.email, // Assuming user wants replies to go to them, or we can add an email field to the form
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
       setStatus('sent');
-      setTimeout(() => setStatus('idle'), 2000);
-    }, 600);
+      setFormState({ name: '', subject: '', message: '' });
+      setTimeout(() => setStatus('idle'), 3000);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setStatus('idle');
+      alert("Failed to send message. Please check console or try again later.");
+    }
   };
 
   return (
     <footer id="contact" className="relative pt-20 md:pt-32 pb-32 md:pb-10 px-4 overflow-hidden">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md border-t border-slate-800" />
-      
+
       <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
         {/* Left: Contact Info */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -44,11 +64,11 @@ const Contact: React.FC = () => {
             </span>
             COMMUNICATION_LINK_OPEN
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Initialize <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Handshake</span>
           </h2>
-          
+
           <p className="text-slate-400 mb-8 leading-relaxed font-light">
             System is ready for incoming transmission. Whether you have a question about my architecture, a project proposal, or just want to connect—send a packet.
           </p>
@@ -77,7 +97,7 @@ const Contact: React.FC = () => {
         </motion.div>
 
         {/* Right: Terminal Form */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -102,23 +122,23 @@ const Contact: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-mono text-primary mb-1">SENDER_ID (NAME)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   required
                   value={formState.name}
-                  onChange={e => setFormState({...formState, name: e.target.value})}
+                  onChange={e => setFormState({ ...formState, name: e.target.value })}
                   className="w-full bg-slate-900/50 border border-slate-800 rounded p-3 text-sm md:text-base text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-mono"
                   placeholder="Enter your identification..."
                 />
               </div>
-              
+
               <div>
                 <label className="block text-xs font-mono text-primary mb-1">PACKET_HEADER (SUBJECT)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   required
                   value={formState.subject}
-                  onChange={e => setFormState({...formState, subject: e.target.value})}
+                  onChange={e => setFormState({ ...formState, subject: e.target.value })}
                   className="w-full bg-slate-900/50 border border-slate-800 rounded p-3 text-sm md:text-base text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-mono"
                   placeholder="Purpose of transmission..."
                 />
@@ -126,19 +146,19 @@ const Contact: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-mono text-primary mb-1">PAYLOAD (MESSAGE)</label>
-                <textarea 
+                <textarea
                   rows={4}
                   required
                   value={formState.message}
-                  onChange={e => setFormState({...formState, message: e.target.value})}
+                  onChange={e => setFormState({ ...formState, message: e.target.value })}
                   className="w-full bg-slate-900/50 border border-slate-800 rounded p-3 text-sm md:text-base text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-mono resize-none"
                   placeholder="Input message data..."
                 />
               </div>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={status === 'sending' || status === 'sent'}
               className={`mt-6 w-full py-3.5 px-4 rounded flex items-center justify-center gap-2 font-mono text-sm font-bold transition-all overflow-hidden relative ${status === 'sent' ? 'bg-green-500 text-black' : 'bg-primary text-black hover:bg-white'}`}
             >
@@ -157,15 +177,15 @@ const Contact: React.FC = () => {
                   <CheckCircle size={16} /> PACKET SENT
                 </>
               )}
-              
+
               {/* Scanning Line Effect */}
               {status === 'sending' && (
-                 <motion.div 
-                   className="absolute inset-0 bg-white/20"
-                   initial={{ x: '-100%' }}
-                   animate={{ x: '100%' }}
-                   transition={{ repeat: Infinity, duration: 0.5 }} // Faster scan
-                 />
+                <motion.div
+                  className="absolute inset-0 bg-white/20"
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '100%' }}
+                  transition={{ repeat: Infinity, duration: 0.5 }} // Faster scan
+                />
               )}
             </button>
           </form>
@@ -173,9 +193,9 @@ const Contact: React.FC = () => {
       </div>
 
       <div className="mt-16 border-t border-slate-900 pt-8 text-center pb-16 md:pb-0">
-         <p className="text-slate-600 text-xs font-mono">
-           © 2025 OUSSAMA ELAMRANI | SYSTEM INTEGRITY VERIFIED
-         </p>
+        <p className="text-slate-600 text-xs font-mono">
+          © 2025 OUSSAMA ELAMRANI | SYSTEM INTEGRITY VERIFIED
+        </p>
       </div>
     </footer>
   );

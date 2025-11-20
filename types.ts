@@ -22,6 +22,8 @@ export interface Project {
   description: string[];
   tech: string[];
   category: 'Web' | 'IoT' | 'Mobile' | 'Other';
+  image: string;
+  link: string;
 }
 
 export interface SkillCategory {

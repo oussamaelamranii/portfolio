@@ -31,15 +31,18 @@ Instructions:
 - Keep the "vibes" technical and enthusiastic.
 `;
 
+// REPLACE WITH YOUR GEMINI API KEY
+const GEMINI_API_KEY = "AIzaSyAHccHwUqqUayE8n_3BIigAXWmIpcXyRx4";
+
 export const sendMessageToGemini = async (userMessage: string): Promise<string> => {
-  if (!process.env.API_KEY) {
-    return "Error: API Key is missing. Please configure the environment.";
+  if (!GEMINI_API_KEY) {
+    return "Error: API Key is missing. Please add your Gemini API Key in services/geminiService.ts";
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const model = "gemini-2.5-flash"; 
-    
+    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+    const model = "gemini-2.5-flash";
+
     const response = await ai.models.generateContent({
       model: model,
       contents: userMessage,
