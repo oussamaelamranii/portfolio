@@ -27,19 +27,24 @@ export const SKILLS: SkillCategory[] = [
     icon: Layout
   },
   {
+    name: "Databases & ORM",
+    skills: ["MySQL", "SQL Server", "SQLite", "MongoDB", "PDO", "Entity Framework", "Hibernate", "Doctrine"],
+    icon: Database
+  },
+  {
     name: "DevOps & Cloud",
     skills: ["Docker", "Kubernetes", "Jenkins", "Ansible", "SonarQube", "Grafana", "Prometheus", "Maven", "Azure", "Terraform", "Argo CD"],
     icon: Cloud
   },
   {
     name: "Principles & Architectures",
-    skills: ["SOLID", "Design Patterns", "Microservices", "MVC", "CQRS", "API REST & RESTful"],
+    skills: ["SOLID", "Design Patterns", "Microservices", "MVC", "CQRS", "API REST & RESTful", "UML", "Merise"],
     icon: Server
   },
   {
     name: "Methodologies & Tools",
     skills: ["Scrum", "Kanban", "Git", "GitHub", "GitLab"],
-    icon: Database
+    icon: Terminal
   }
 ];
 
@@ -162,6 +167,9 @@ export const PROJECTS: Project[] = [
 
 export const CERTIFICATIONS = [
   "Azure AZ-900 (Microsoft)",
+  "Create a web API with ASP.NET Core controllers (Microsoft)",
+  "Create a web UI with ASP.NET Core (Microsoft)",
+  "Persist and retrieve relational data by using Entity Framework Core (Microsoft)",
   "C# (freeCodeCamp with Microsoft)",
   "Java (HackerRank)",
   "Angular (HackerRank)",

@@ -14,7 +14,7 @@ const Skills: React.FC = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -41,52 +41,68 @@ const Skills: React.FC = () => {
             return (
               <motion.div
                 key={category.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.05, duration: 0.3 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="group relative"
+                className="h-full"
               >
-                {/* Card Container */}
-                <div className="h-full bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-5 md:p-6 transition-all duration-200 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,136,255,0.1)]">
-                  
-                  {/* Header */}
-                  <div className="flex items-center gap-4 mb-5 pb-4 border-b border-slate-800 group-hover:border-primary/30 transition-colors">
-                    <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 group-hover:border-primary/50 group-hover:text-primary transition-all">
-                      <Icon size={24} className="text-slate-400 group-hover:text-primary transition-colors" />
+                <div className="h-full bg-[#0c0c0c] rounded-lg border border-slate-800 shadow-xl overflow-hidden flex flex-col hover:border-primary/50 transition-colors group relative">
+                  {/* Terminal Header */}
+                  <div className="bg-slate-900/90 px-3 py-2 border-b border-slate-800 flex items-center justify-between backdrop-blur-sm">
+                    <div className="flex gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-base md:text-lg font-bold text-slate-200 font-mono leading-tight">{category.name}</h3>
-                      <div className="w-full h-1 bg-slate-800 mt-2 rounded-full overflow-hidden">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          whileInView={{ width: "100%" }}
-                          transition={{ delay: 0.2 + index * 0.05, duration: 0.6 }}
-                          className="h-full bg-gradient-to-r from-primary to-secondary"
-                        />
-                      </div>
+                    <div className="text-slate-400 text-[10px] font-mono flex items-center gap-2 opacity-80">
+                      <span className="hidden sm:inline">oussama@portfolio:~</span>
+                      <span className="text-slate-600">|</span>
+                      <span>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                   </div>
 
-                  {/* Skills List */}
-                  <div className="space-y-3">
-                    {category.skills.map((skill, i) => (
-                      <div key={skill} className="flex items-center justify-between group/skill">
-                        <span className="text-sm text-slate-400 font-mono group-hover/skill:text-white transition-colors">
-                          {skill}
-                        </span>
-                        <span className="h-[1px] flex-1 mx-3 bg-slate-800 group-hover/skill:bg-primary/30 transition-colors" />
-                        <span className="text-[10px] text-slate-600 group-hover/skill:text-primary transition-colors">
-                          OK
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  {/* Terminal Content */}
+                  <div className="p-4 md:p-5 flex-1 font-mono text-sm relative bg-black/40">
+                    {/* Scanline Effect */}
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] z-10 pointer-events-none bg-[length:100%_2px,3px_100%] opacity-20" />
 
-                  {/* Corner Decor */}
-                  <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-slate-600 rounded-tr opacity-50 group-hover:border-primary group-hover:opacity-100 transition-all" />
-                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-slate-600 rounded-bl opacity-50 group-hover:border-primary group-hover:opacity-100 transition-all" />
+                    <div className="flex items-center gap-2 text-primary mb-4 border-b border-slate-800/50 pb-2 relative z-20">
+                      <Icon size={16} className="text-cyan-400 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]" />
+                      <span className="font-bold text-slate-100 tracking-wide">{category.name}</span>
+                    </div>
+
+                    <div className="space-y-3 relative z-20">
+                      {/* Shell Commands */}
+                      <div className="text-xs mb-4 font-mono leading-relaxed">
+                        <div className="flex flex-wrap gap-2 items-center">
+                          <span className="text-emerald-400 font-bold">oussama@portfolio:~$</span>
+                          <span className="text-slate-100">cd</span>
+                          <span className="text-blue-400 font-semibold">{category.name.toLowerCase().replace(/\s+/g, '-')}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2 items-center">
+                          <span className="text-emerald-400 font-bold">oussama@portfolio:~/<span className="text-blue-400">{category.name.toLowerCase().replace(/\s+/g, '-')}</span>$</span>
+                          <span className="text-slate-100">ls -la</span>
+                        </div>
+                      </div>
+
+                      {/* Skills List */}
+                      <div className="pl-1 space-y-1.5">
+                        {category.skills.map((skill, i) => (
+                          <div key={skill} className="flex items-center gap-3 text-slate-300 hover:text-cyan-300 transition-colors group/item">
+                            <span className="text-slate-600 text-[10px] font-light group-hover/item:text-slate-500 transition-colors">-rwxr-xr-x</span>
+                            <span className="text-slate-600 text-[10px] font-light group-hover/item:text-slate-500 transition-colors">root</span>
+                            <span className="text-slate-200 font-medium tracking-wide group-hover/item:translate-x-1 transition-transform duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_5px_rgba(34,211,238,0.5)]">{skill}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="pt-3 flex items-center gap-2">
+                        <span className="text-emerald-400 text-xs font-bold">oussama@portfolio:~/<span className="text-blue-400">{category.name.toLowerCase().replace(/\s+/g, '-')}</span>$</span>
+                        <span className="animate-pulse text-emerald-400 w-2.5 h-5 bg-emerald-400/80 block shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             );
