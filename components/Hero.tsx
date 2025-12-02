@@ -291,100 +291,73 @@ const Hero: React.FC = () => {
                 {/* Back glow */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary via-secondary to-blue-600 rounded-2xl blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-300 animate-pulse-slow" />
 
-                {/* Main Card - Cyber Terminal Edition */}
-                <div className="absolute inset-0 bg-[#0c0c0c] border border-slate-800 rounded-xl p-1 shadow-2xl transform transition-transform duration-200 group-hover:rotate-y-6 group-hover:rotate-x-6 flex flex-col overflow-hidden font-mono">
+                {/* Main Card - Glassmorphism Edition (Theme Matched) */}
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-2xl border border-primary/20 rounded-3xl p-6 shadow-2xl transform transition-transform duration-200 group-hover:rotate-y-6 group-hover:rotate-x-6 flex flex-col overflow-hidden relative">
 
-                  {/* Terminal Header */}
-                  <div className="bg-[#1a1a1a] px-4 py-2 flex items-center justify-between border-b border-slate-800 rounded-t-lg">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600/50"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-600/50"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-600/50"></div>
+                  {/* Glass Reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-50 pointer-events-none" />
+
+                  {/* Header Status Bar */}
+                  <div className="flex justify-between items-center mb-8 relative z-10">
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-primary/20 backdrop-blur-md">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#34d399]"></div>
+                      <span className="text-[10px] font-mono text-emerald-400 tracking-wider">ONLINE</span>
                     </div>
-                    <div className="text-[10px] text-slate-500 flex items-center gap-2">
-                      <Terminal size={10} />
-                      <span>user_profile.json</span>
+                    <div className="flex gap-1">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className={`w-1 h-1 rounded-full ${i === 2 ? 'bg-primary animate-ping' : 'bg-slate-600'}`} />
+                      ))}
                     </div>
                   </div>
 
-                  {/* Terminal Content */}
-                  <div className="flex-1 p-6 relative overflow-hidden flex flex-col items-center">
-                    {/* Background Grid */}
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] opacity-20 pointer-events-none bg-[length:100%_4px,6px_100%]" />
+                  {/* Profile Photo Section */}
+                  <div className="flex-1 flex flex-col items-center justify-center mb-8 relative z-10">
+                    <div className="relative w-48 h-48 mb-6 group-hover:scale-105 transition-transform duration-500 ease-out">
+                      {/* Glowing Backdrop */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-primary via-secondary to-blue-500 rounded-full blur-2xl opacity-40 animate-pulse-slow" />
 
-                    {/* Profile Image with Tech Borders */}
-                    <div className="relative w-40 h-40 mb-6 group-hover:scale-105 transition-transform duration-300">
-                      {/* Corner Brackets */}
-                      <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
-                      <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary"></div>
-                      <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary"></div>
-                      <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
+                      {/* Rotating Rings */}
+                      <div className="absolute inset-[-4px] border border-primary/20 rounded-full animate-spin-slow" />
+                      <div className="absolute inset-[-12px] border border-secondary/30 rounded-full animate-spin-reverse-slow border-dashed" />
 
-                      {/* Image */}
-                      <div className="w-full h-full bg-slate-900 overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                      {/* Image Container */}
+                      <div className="absolute inset-0 rounded-full overflow-hidden border-4 border-slate-900/50 shadow-2xl">
                         <img
                           src={PROFILE.image}
                           alt={PROFILE.name}
-                          className="w-full h-full object-cover opacity-80 hover:opacity-100"
+                          className="w-full h-full object-cover filter brightness-110 contrast-110"
                         />
-                      </div>
-
-                      {/* Scanline Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/20 to-transparent h-2 w-full animate-scan pointer-events-none"></div>
-                    </div>
-
-                    {/* Code Details */}
-                    <div className="w-full text-xs md:text-sm space-y-2 font-mono relative z-10">
-                      <div className="flex">
-                        <span className="text-purple-400 mr-2">const</span>
-                        <span className="text-yellow-200">developer</span>
-                        <span className="text-slate-400 mr-2"> = </span>
-                        <span className="text-slate-400">{`{`}</span>
-                      </div>
-
-                      <div className="pl-4 space-y-1">
-                        <div className="flex">
-                          <span className="text-blue-300 mr-2">name:</span>
-                          <span className="text-green-400">"{PROFILE.name}"</span><span className="text-slate-500">,</span>
-                        </div>
-                        <div className="flex">
-                          <span className="text-blue-300 mr-2">role:</span>
-                          <span className="text-green-400">"Full Stack Engineer"</span><span className="text-slate-500">,</span>
-                        </div>
-                        <div className="flex">
-                          <span className="text-blue-300 mr-2">level:</span>
-                          <span className="text-orange-400">22</span><span className="text-slate-500">,</span>
-                        </div>
-                        <div className="flex">
-                          <span className="text-blue-300 mr-2">status:</span>
-                          <span className="text-green-400">"ONLINE"</span>
-                          <span className="inline-block w-2 h-4 bg-green-400 animate-pulse ml-1"></span>
-                        </div>
-                      </div>
-
-                      <div className="text-slate-400">{`};`}</div>
-                    </div>
-
-                    {/* Bottom Stats - JSON Array Style */}
-                    <div className="mt-auto w-full pt-4 border-t border-slate-800/50">
-                      <div className="text-[10px] text-slate-500 mb-1">// SYSTEM_STATS</div>
-                      <div className="flex justify-between font-mono text-xs">
-                        <div className="flex flex-col">
-                          <span className="text-slate-400">PROJECTS</span>
-                          <span className="text-blue-400">[ 12+ ]</span>
-                        </div>
-                        <div className="flex flex-col text-center">
-                          <span className="text-slate-400">EXP</span>
-                          <span className="text-purple-400">[ 3Y ]</span>
-                        </div>
-                        <div className="flex flex-col text-right">
-                          <span className="text-slate-400">RANK</span>
-                          <span className="text-green-400">[ A+ ]</span>
-                        </div>
+                        {/* Shine Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                       </div>
                     </div>
 
+                    <h2 className="text-3xl font-heading font-bold text-white mb-2 tracking-tight text-center drop-shadow-lg">
+                      {PROFILE.name}
+                    </h2>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 backdrop-blur-md">
+                      <span className="text-xs font-mono text-primary font-bold tracking-widest">FULL STACK ENGINEER</span>
+                    </div>
                   </div>
+
+                  {/* Footer Stats Grid */}
+                  <div className="grid grid-cols-3 gap-3 mt-auto relative z-10">
+                    {[
+                      { label: "PROJECTS", value: "12+", color: "text-primary" },
+                      { label: "EXP", value: "3 YRS", color: "text-secondary" },
+                      { label: "RANK", value: "A+", color: "text-emerald-400" }
+                    ].map((stat, idx) => (
+                      <div key={idx} className="bg-black/40 backdrop-blur-sm p-3 rounded-xl border border-white/5 hover:border-primary/30 transition-colors text-center group/stat">
+                        <div className="text-[9px] text-slate-400 font-mono mb-1 tracking-wider">{stat.label}</div>
+                        <div className={`text-lg font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>{stat.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Decorative Elements */}
+                  <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-b from-secondary/10 to-transparent pointer-events-none" />
+
                 </div>
               </motion.div>
             </div>
