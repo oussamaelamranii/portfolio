@@ -44,17 +44,20 @@ const Projects: React.FC = () => {
               whileHover={{ y: -8, scale: 1.02 }}
               className="group h-full"
             >
-              <div className="relative h-full bg-surface border border-slate-800 rounded-xl overflow-hidden group hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(99,102,241,0.2)] flex flex-col">
+              <div className="relative h-full bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] flex flex-col">
+
+                {/* Glass Reflection */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-50 pointer-events-none" />
 
                 {/* System Status Indicator */}
-                <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2 py-1 rounded-full border border-slate-700">
-                  <div className={`w-1.5 h-1.5 rounded-full ${project.status === 'In Progress' ? 'bg-yellow-500 animate-pulse' : 'bg-green-500'}`} />
-                  <span className="text-[10px] font-mono text-slate-300 uppercase">{project.status || 'ONLINE'}</span>
+                <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+                  <div className={`w-1.5 h-1.5 rounded-full ${project.status === 'In Progress' ? 'bg-yellow-500 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_#34d399]'}`} />
+                  <span className="text-[10px] font-mono text-slate-300 uppercase tracking-wider">{project.status || 'ONLINE'}</span>
                 </div>
 
                 {/* Image Section */}
                 <div className="relative h-48 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-10" />
 
                   {/* Scanning Overlay */}
                   <div className="absolute inset-0 bg-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-700 z-20 pointer-events-none" />
@@ -90,13 +93,10 @@ const Projects: React.FC = () => {
                 </div>
 
                 {/* Content Section */}
-                <div className="p-6 flex-1 flex flex-col relative">
-                  {/* Decorative Corner */}
-                  <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-slate-700 group-hover:border-primary transition-colors" />
-
+                <div className="p-6 flex-1 flex flex-col relative z-10">
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-heading font-bold text-white group-hover:text-primary transition-colors">{project.title}</h3>
-                    <span className="text-xs font-mono text-slate-500 border border-slate-800 px-2 py-1 rounded bg-slate-900/50">
+                    <span className="text-xs font-mono text-slate-400 border border-white/10 px-2 py-1 rounded-full bg-slate-800/50">
                       {project.year || '2024'}
                     </span>
                   </div>
@@ -108,7 +108,7 @@ const Projects: React.FC = () => {
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tech.slice(0, 3).map((t, i) => (
-                      <span key={i} className="text-[10px] font-mono text-primary bg-primary/10 px-2 py-1 rounded border border-primary/20 group-hover:border-primary/40 transition-colors">
+                      <span key={i} className="text-[10px] font-mono text-primary bg-primary/10 px-2 py-1 rounded-md border border-primary/20 group-hover:border-primary/40 transition-colors">
                         {t}
                       </span>
                     ))}
