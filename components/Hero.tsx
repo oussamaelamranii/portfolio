@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { PROFILE } from '../constants';
-import { ArrowDown, Github, Linkedin, Power, Download, Check, Loader2, Terminal } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Power, Download, Check, Loader2, Terminal, ArrowRight, Mail } from 'lucide-react';
 import { useSound } from './SoundController';
 import { useAchievements } from './Achievements';
 import DecryptText from './DecryptText';
@@ -86,6 +86,7 @@ const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
 
 
 const Hero: React.FC = () => {
+  const { t } = useTranslation();
   const [bootComplete, setBootComplete] = useState(false);
   const [downloadState, setDownloadState] = useState<'idle' | 'loading' | 'done'>('idle');
   const ref = useRef<HTMLDivElement>(null);
@@ -116,8 +117,8 @@ const Hero: React.FC = () => {
     setTimeout(() => {
       try {
         const link = document.createElement('a');
-        link.href = '/resume.png';
-        link.download = 'Oussama_Elamrani_CV.png';
+        link.href = '/resume-oussama-elamrani-PFE.pdf';
+        link.download = 'Oussama_Elamrani_Resume.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -208,7 +209,7 @@ const Hero: React.FC = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -translate-x-full group-hover:animate-scan" />
                 <p className="text-slate-300 font-mono text-sm md:text-base leading-relaxed relative z-10">
-                  <span className="text-primary font-bold">&gt; WHOAMI:</span> {PROFILE.about}
+                  <span className="text-primary font-bold">&gt; WHOAMI:</span> {t('hero.description')}
                 </p>
               </motion.div>
 
@@ -225,7 +226,7 @@ const Hero: React.FC = () => {
                   className="relative group overflow-hidden px-8 py-3.5 bg-primary text-white font-bold font-mono text-sm rounded-lg tracking-wider shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:shadow-[0_0_50px_rgba(99,102,241,0.6)] active:scale-95 transition-all text-center flex items-center justify-center gap-2"
                 >
                   <Terminal size={16} />
-                  <span className="relative z-10">VIEW WORK</span>
+                  <span className="relative z-10">{t('hero.cta_projects')}</span>
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out" />
                 </a>
 
@@ -290,69 +291,100 @@ const Hero: React.FC = () => {
                 {/* Back glow */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary via-secondary to-blue-600 rounded-2xl blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-300 animate-pulse-slow" />
 
-                {/* Main Card */}
-                <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-2xl transform transition-transform duration-200 group-hover:rotate-y-6 group-hover:rotate-x-6 flex flex-col overflow-hidden cyber-card">
+                {/* Main Card - Cyber Terminal Edition */}
+                <div className="absolute inset-0 bg-[#0c0c0c] border border-slate-800 rounded-xl p-1 shadow-2xl transform transition-transform duration-200 group-hover:rotate-y-6 group-hover:rotate-x-6 flex flex-col overflow-hidden font-mono">
 
-                  {/* Header Status Bar */}
-                  <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
-                      <span className="text-[10px] font-mono text-secondary">NET_ONLINE</span>
+                  {/* Terminal Header */}
+                  <div className="bg-[#1a1a1a] px-4 py-2 flex items-center justify-between border-b border-slate-800 rounded-t-lg">
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600/50"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-600/50"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-600/50"></div>
                     </div>
-                    <div className="flex gap-1">
-                      <div className="w-3 h-1 bg-slate-600 rounded-full"></div>
-                      <div className="w-3 h-1 bg-slate-600 rounded-full"></div>
-                      <div className="w-3 h-1 bg-slate-400 rounded-full"></div>
+                    <div className="text-[10px] text-slate-500 flex items-center gap-2">
+                      <Terminal size={10} />
+                      <span>user_profile.json</span>
                     </div>
                   </div>
 
-                  {/* Profile Photo Section */}
-                  <div className="flex-1 flex flex-col items-center justify-center mb-6 relative">
-                    {/* Scanning Effect Overlay */}
-                    <div className="absolute w-full h-[2px] bg-primary/50 top-0 left-0 animate-scan shadow-[0_0_10px_#0088ff]"></div>
+                  {/* Terminal Content */}
+                  <div className="flex-1 p-6 relative overflow-hidden flex flex-col items-center">
+                    {/* Background Grid */}
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] opacity-20 pointer-events-none bg-[length:100%_4px,6px_100%]" />
 
+                    {/* Profile Image with Tech Borders */}
                     <div className="relative w-40 h-40 mb-6 group-hover:scale-105 transition-transform duration-300">
-                      {/* Spinning Rings */}
-                      <div className="absolute inset-0 border border-primary/30 rounded-full animate-spin-slow"></div>
-                      <div className="absolute inset-[-10px] border border-secondary/20 rounded-full animate-spin-reverse-slow"></div>
+                      {/* Corner Brackets */}
+                      <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
+                      <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary"></div>
+                      <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary"></div>
+                      <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
 
-                      {/* Image Container */}
-                      <div className="absolute inset-1 rounded-full overflow-hidden border-2 border-primary/50 shadow-[0_0_30px_rgba(0,136,255,0.3)] bg-black">
+                      {/* Image */}
+                      <div className="w-full h-full bg-slate-900 overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
                         <img
                           src={PROFILE.image}
                           alt={PROFILE.name}
-                          className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
+                          className="w-full h-full object-cover opacity-80 hover:opacity-100"
                         />
-                        {/* Glitch Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-transparent translate-y-[-100%] animate-scan pointer-events-none"></div>
+                      </div>
+
+                      {/* Scanline Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/20 to-transparent h-2 w-full animate-scan pointer-events-none"></div>
+                    </div>
+
+                    {/* Code Details */}
+                    <div className="w-full text-xs md:text-sm space-y-2 font-mono relative z-10">
+                      <div className="flex">
+                        <span className="text-purple-400 mr-2">const</span>
+                        <span className="text-yellow-200">developer</span>
+                        <span className="text-slate-400 mr-2"> = </span>
+                        <span className="text-slate-400">{`{`}</span>
+                      </div>
+
+                      <div className="pl-4 space-y-1">
+                        <div className="flex">
+                          <span className="text-blue-300 mr-2">name:</span>
+                          <span className="text-green-400">"{PROFILE.name}"</span><span className="text-slate-500">,</span>
+                        </div>
+                        <div className="flex">
+                          <span className="text-blue-300 mr-2">role:</span>
+                          <span className="text-green-400">"Full Stack Engineer"</span><span className="text-slate-500">,</span>
+                        </div>
+                        <div className="flex">
+                          <span className="text-blue-300 mr-2">level:</span>
+                          <span className="text-orange-400">22</span><span className="text-slate-500">,</span>
+                        </div>
+                        <div className="flex">
+                          <span className="text-blue-300 mr-2">status:</span>
+                          <span className="text-green-400">"ONLINE"</span>
+                          <span className="inline-block w-2 h-4 bg-green-400 animate-pulse ml-1"></span>
+                        </div>
+                      </div>
+
+                      <div className="text-slate-400">{`};`}</div>
+                    </div>
+
+                    {/* Bottom Stats - JSON Array Style */}
+                    <div className="mt-auto w-full pt-4 border-t border-slate-800/50">
+                      <div className="text-[10px] text-slate-500 mb-1">// SYSTEM_STATS</div>
+                      <div className="flex justify-between font-mono text-xs">
+                        <div className="flex flex-col">
+                          <span className="text-slate-400">PROJECTS</span>
+                          <span className="text-blue-400">[ 12+ ]</span>
+                        </div>
+                        <div className="flex flex-col text-center">
+                          <span className="text-slate-400">EXP</span>
+                          <span className="text-purple-400">[ 3Y ]</span>
+                        </div>
+                        <div className="flex flex-col text-right">
+                          <span className="text-slate-400">RANK</span>
+                          <span className="text-green-400">[ A+ ]</span>
+                        </div>
                       </div>
                     </div>
 
-                    <h2 className="text-xl font-heading font-bold text-white mb-1">{PROFILE.name}</h2>
-                    <div className="text-xs font-mono text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-                      LEVEL 22 ENGINEER
-                    </div>
                   </div>
-
-                  {/* Footer Stats Grid */}
-                  <div className="grid grid-cols-3 gap-2 mt-auto">
-                    <div className="bg-slate-950/50 p-2 rounded border border-slate-800 text-center">
-                      <div className="text-[10px] text-slate-500 font-mono">PROJECTS</div>
-                      <div className="text-white font-bold">12+</div>
-                    </div>
-                    <div className="bg-slate-950/50 p-2 rounded border border-slate-800 text-center">
-                      <div className="text-[10px] text-slate-500 font-mono">EXP</div>
-                      <div className="text-white font-bold">3 YRS</div>
-                    </div>
-                    <div className="bg-slate-950/50 p-2 rounded border border-slate-800 text-center">
-                      <div className="text-[10px] text-slate-500 font-mono">RANK</div>
-                      <div className="text-secondary font-bold">A+</div>
-                    </div>
-                  </div>
-
-                  {/* Decorative Hologram Scanlines */}
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-20 pointer-events-none opacity-30 bg-[length:100%_4px,6px_100%]"></div>
-
                 </div>
               </motion.div>
             </div>

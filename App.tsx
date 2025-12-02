@@ -11,6 +11,7 @@ import CommandPalette from './components/CommandPalette';
 import CustomCursor from './components/CustomCursor';
 import { SoundProvider, useSound } from './components/SoundController';
 import { AchievementsProvider, useAchievements } from './components/Achievements';
+import LanguageSwitcher from './components/LanguageSwitcher';
 import { Code2, Terminal, Github, ChevronUp, Home, Briefcase, User, Search, Menu } from 'lucide-react';
 
 // Inner App Component to use hooks
@@ -90,6 +91,7 @@ const AppContent = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex gap-8 text-xs font-mono text-slate-400 uppercase tracking-widest">
             <button onClick={() => handleNavClick('skills')} className="hover:text-primary transition-colors flex items-center gap-1"><Code2 size={12} /> Stack</button>
+            <LanguageSwitcher />
             <div className="hidden lg:flex items-center gap-2 text-[10px] font-mono text-slate-600 bg-slate-900 px-2 py-1 rounded border border-slate-800 cursor-pointer hover:border-primary/50 transition-colors" onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}>
               <span>CMD + K</span>
             </div>

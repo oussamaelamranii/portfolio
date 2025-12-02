@@ -1,16 +1,18 @@
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { PROFILE } from '../constants';
 import { Send, Mail, MapPin, CheckCircle, Terminal, AlertCircle, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
-// EmailJS Configuration - REPLACE THESE WITH YOUR ACTUAL KEYS
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+// EmailJS Configuration
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const Contact: React.FC = () => {
+  const { t } = useTranslation();
   const [formState, setFormState] = useState({
     name: '',
     subject: '',
@@ -21,6 +23,13 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      console.error("EmailJS Error: Missing Environment Variables");
+      alert("EmailJS Configuration Error: Please check your .env file for Service ID, Template ID, and Public Key.");
+      setStatus('idle');
+      return;
+    }
 
     try {
       await emailjs.send(
@@ -66,11 +75,11 @@ const Contact: React.FC = () => {
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Initialize <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Handshake</span>
+            {t('contact.title')}
           </h2>
 
           <p className="text-slate-400 mb-8 leading-relaxed font-light">
-            System is ready for incoming transmission. Whether you have a question about my architecture, a project proposal, or just want to connect—send a packet.
+            {t('contact.subtitle')}
           </p>
 
           <div className="space-y-4 md:space-y-6">
@@ -121,7 +130,7 @@ const Contact: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-mono text-primary mb-1">SENDER_ID (NAME)</label>
+                <label className="block text-xs font-mono text-primary mb-1">{t('contact.name_label')}</label>
                 <input
                   type="text"
                   required
@@ -133,7 +142,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-primary mb-1">PACKET_HEADER (SUBJECT)</label>
+                <label className="block text-xs font-mono text-primary mb-1">{t('contact.subject_label')}</label>
                 <input
                   type="text"
                   required
@@ -145,7 +154,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-primary mb-1">PAYLOAD (MESSAGE)</label>
+                <label className="block text-xs font-mono text-primary mb-1">{t('contact.message_label')}</label>
                 <textarea
                   rows={4}
                   required
@@ -164,17 +173,17 @@ const Contact: React.FC = () => {
             >
               {status === 'idle' && (
                 <>
-                  <Send size={16} /> INITIATE_TRANSMISSION
+                  <Send size={16} /> {t('contact.send_btn')}
                 </>
               )}
               {status === 'sending' && (
                 <>
-                  <span className="animate-spin mr-2">⟳</span> ENCRYPTING & SENDING...
+                  <span className="animate-spin mr-2">⟳</span> {t('contact.sending')}
                 </>
               )}
               {status === 'sent' && (
                 <>
-                  <CheckCircle size={16} /> PACKET SENT
+                  <CheckCircle size={16} /> {t('contact.sent')}
                 </>
               )}
 

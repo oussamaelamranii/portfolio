@@ -1,0 +1,26 @@
+{
+    "hero": {
+        "greeting": "Bonjour, je suis",
+        "role": "Ingénieur Full Stack & Architecte Cloud",
+        "description": "Je conçois des applications évolutives et performantes en utilisant des technologies modernes.",
+        "cta_projects": "Voir Projets",
+        "cta_contact": "Me Contacter"
+    },
+    "nav": {
+        "home": "Accueil",
+        "skills": "Compétences",
+        "experience": "Expérience",
+        "projects": "Projets",
+        "contact": "Contact"
+    },
+    "contact": {
+        "title": "Initialiser la Connexion",
+        "subtitle": "Le système est prêt pour la transmission entrante.",
+        "name_label": "ID_EXPÉDITEUR (NOM)",
+        "subject_label": "EN-TÊTE_PAQUET (SUJET)",
+        "message_label": "CHARGE UTILE (MESSAGE)",
+        "send_btn": "LANCER_TRANSMISSION",
+        "sending": "CHIFFREMENT & ENVOI...",
+        "sent": "PAQUET ENVOYÉ"
+    }
+}

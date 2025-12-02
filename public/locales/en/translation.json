@@ -1,0 +1,26 @@
+{
+    "hero": {
+        "greeting": "Hello, I'm",
+        "role": "Full Stack Engineer & Cloud Architect",
+        "description": "I build scalable, high-performance applications using modern technologies.",
+        "cta_projects": "View Projects",
+        "cta_contact": "Contact Me"
+    },
+    "nav": {
+        "home": "Home",
+        "skills": "Skills",
+        "experience": "Experience",
+        "projects": "Projects",
+        "contact": "Contact"
+    },
+    "contact": {
+        "title": "Initialize Handshake",
+        "subtitle": "System is ready for incoming transmission.",
+        "name_label": "SENDER_ID (NAME)",
+        "subject_label": "PACKET_HEADER (SUBJECT)",
+        "message_label": "PAYLOAD (MESSAGE)",
+        "send_btn": "INITIATE_TRANSMISSION",
+        "sending": "ENCRYPTING & SENDING...",
+        "sent": "PACKET SENT"
+    }
+}
