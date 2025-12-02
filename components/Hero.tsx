@@ -171,25 +171,35 @@ const Hero: React.FC = () => {
 
               {/* Mobile Only Profile Avatar */}
               <motion.div
-                className="lg:hidden w-full flex justify-center mb-6"
+                className="lg:hidden w-full flex justify-center mb-8"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="relative w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-primary via-transparent to-secondary">
-                  <div className="absolute inset-0 rounded-full border-2 border-primary/30 animate-spin-slow" />
-                  <div className="absolute inset-0 rounded-full border border-secondary/20 animate-spin-reverse-slow" />
-                  <img
-                    src={PROFILE.image}
-                    alt={PROFILE.name}
-                    className="w-full h-full rounded-full object-cover border-2 border-black bg-black"
-                  />
-                  <div className="absolute bottom-0 right-0 w-4 h-4 bg-secondary rounded-full border-2 border-black" />
+                <div className="relative w-40 h-40">
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl animate-pulse-slow" />
+
+                  <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-tr from-primary via-transparent to-secondary">
+                    <div className="absolute inset-0 rounded-full border-2 border-primary/30 animate-spin-slow" />
+                    <div className="absolute inset-0 rounded-full border border-secondary/20 animate-spin-reverse-slow" />
+                    <img
+                      src={PROFILE.image}
+                      alt={PROFILE.name}
+                      className="w-full h-full rounded-full object-cover border-2 border-black bg-black"
+                    />
+
+                    {/* Online Status Badge (Mobile) */}
+                    <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md border border-emerald-500/30 px-3 py-1 rounded-full flex items-center gap-2 z-10 shadow-lg">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]"></div>
+                      <span className="text-[10px] font-mono text-emerald-400 font-bold tracking-wider">ONLINE</span>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
 
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-8xl font-heading font-bold text-white mb-4 md:mb-6 tracking-tighter leading-[0.9]"
+                className="text-5xl sm:text-6xl md:text-8xl font-heading font-bold text-white mb-6 tracking-tighter leading-[0.9]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
@@ -223,9 +233,9 @@ const Hero: React.FC = () => {
                   href="#projects"
                   onMouseEnter={playHover}
                   onClick={playClick}
-                  className="relative group overflow-hidden px-8 py-3.5 bg-primary text-white font-bold font-mono text-sm rounded-lg tracking-wider shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:shadow-[0_0_50px_rgba(99,102,241,0.6)] active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+                  className="relative group overflow-hidden px-8 py-4 bg-primary text-white font-bold font-mono text-sm rounded-lg tracking-wider shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:shadow-[0_0_50px_rgba(99,102,241,0.6)] active:scale-95 transition-all text-center flex items-center justify-center gap-2 w-full sm:w-auto"
                 >
-                  <Terminal size={16} />
+                  <Terminal size={18} />
                   <span className="relative z-10">{t('hero.cta_projects')}</span>
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-out" />
                 </a>
@@ -234,24 +244,24 @@ const Hero: React.FC = () => {
                   onClick={handleDownloadCV}
                   onMouseEnter={playHover}
                   disabled={downloadState !== 'idle'}
-                  className="px-8 py-3.5 bg-surface border border-slate-700 hover:border-primary/50 text-slate-300 hover:text-white font-mono text-sm rounded-lg transition-all tracking-wider flex items-center justify-center gap-2 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-primary/20"
+                  className="px-8 py-4 bg-surface border border-slate-700 hover:border-primary/50 text-slate-300 hover:text-white font-mono text-sm rounded-lg transition-all tracking-wider flex items-center justify-center gap-2 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-primary/20 w-full sm:w-auto"
                 >
                   {downloadState === 'idle' && (
                     <>
                       <span className="relative z-10 flex items-center gap-2">
-                        <Download size={16} /> RESUME
+                        <Download size={18} /> RESUME
                       </span>
                       <div className="absolute inset-0 bg-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-200" />
                     </>
                   )}
                   {downloadState === 'loading' && (
                     <>
-                      <Loader2 size={16} className="animate-spin" /> PROCESSING...
+                      <Loader2 size={18} className="animate-spin" /> PROCESSING...
                     </>
                   )}
                   {downloadState === 'done' && (
                     <>
-                      <Check size={16} className="text-green-400" /> DOWNLOADED
+                      <Check size={18} className="text-green-400" /> DOWNLOADED
                     </>
                   )}
                 </button>
