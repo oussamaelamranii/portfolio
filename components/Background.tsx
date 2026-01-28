@@ -12,14 +12,14 @@ const Background: React.FC = () => {
 
     let width = window.innerWidth;
     let height = window.innerHeight;
-    
+
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
     };
-    
+
     window.addEventListener('resize', resize);
     resize();
 
@@ -63,18 +63,18 @@ const Background: React.FC = () => {
         const scale = focalLength / star.z;
         const x = cx + star.x * scale;
         const y = cy + star.y * scale;
-        
+
         // Calculate radius based on depth (perspective)
         const radius = star.size * scale * 0.005;
 
         // Safety check to prevent IndexSizeError (negative or infinite radius)
         if (radius > 0 && Number.isFinite(radius) && x > -100 && x < width + 100 && y > -100 && y < height + 100) {
-            ctx.beginPath();
-            // Electric Blue / Cyan / White mix for stars
-            const alpha = Math.min(1, scale * 0.001);
-            ctx.fillStyle = `rgba(${Math.random() > 0.5 ? '0, 136, 255' : '0, 217, 255'}, ${alpha})`; 
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fill();
+          ctx.beginPath();
+          // Electric Blue / Cyan / White mix for stars
+          const alpha = Math.min(1, scale * 0.001);
+          ctx.fillStyle = `rgba(${Math.random() > 0.5 ? '0, 136, 255' : '0, 217, 255'}, ${alpha})`;
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fill();
         }
       });
 
@@ -90,9 +90,9 @@ const Background: React.FC = () => {
   }, []);
 
   return (
-    <canvas 
-        ref={canvasRef} 
-        className="fixed inset-0 z-0 w-full h-full pointer-events-none bg-[#02040a]" 
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 z-0 w-full h-full pointer-events-none bg-[#02040a]"
     />
   );
 };

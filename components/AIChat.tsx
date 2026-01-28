@@ -20,6 +20,7 @@ const AIChat: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // New state to track typing status
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { playClick, playHover } = useSound();
@@ -31,7 +32,7 @@ const AIChat: React.FC = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isMinimized]);
+  }, [messages, isMinimized, isTyping]); // added isTyping to dependency
 
   const toggleChat = () => {
     playClick();
@@ -57,19 +58,52 @@ const AIChat: React.FC = () => {
     if (!isMaximized) setIsMinimized(false);
   };
 
+  const typeWriterEffect = async (text: string, messageId: string) => {
+    setIsTyping(true);
+    let currentText = '';
+    const speed = 15; // Speed in ms per character (faster for better UX)
+
+    // Initial empty message
+    setMessages(prev => [...prev, { id: messageId, sender: 'bot', text: "> " }]);
+
+    for (let i = 0; i < text.length; i++) {
+      currentText += text[i];
+      // Update the last message with the new character
+      setMessages(prev => prev.map(msg =>
+        msg.id === messageId ? { ...msg, text: `> ${currentText}` } : msg
+      ));
+
+      // Variable speed for "human" feel (optional, simplistic version here)
+      await new Promise(resolve => setTimeout(resolve, speed));
+      scrollToBottom();
+    }
+    setIsTyping(false);
+  };
+
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return; // Prevent send while typing
 
     playClick();
     const userMessage: Message = { id: Date.now().toString(), sender: 'user', text: input };
+
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsThinking(true);
 
-    const responseText = await sendMessageToGemini(input);
+    try {
+      // 1. Get full response
+      const responseText = await sendMessageToGemini(input);
+      setIsThinking(false);
 
-    setIsThinking(false);
-    setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', text: `> ${responseText}` }]);
+      // 2. Start typewriter effect
+      const botMsgId = (Date.now() + 1).toString();
+      await typeWriterEffect(responseText, botMsgId);
+
+    } catch (error) {
+      console.error("Chat Error:", error);
+      setIsThinking(false);
+      setMessages(prev => [...prev, { id: Date.now().toString(), sender: 'bot', text: "> SYSTEM ERROR: Connection interrupted." }]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -162,6 +196,10 @@ const AIChat: React.FC = () => {
                           {i !== msg.text.split('\n').length - 1 && <br />}
                         </React.Fragment>
                       ))}
+                      {/* Blinking Cursor for latest bot message if typing */}
+                      {msg.sender === 'bot' && isTyping && msg.id === messages[messages.length - 1].id && (
+                        <span className="inline-block w-2 h-4 bg-green-500 align-middle ml-1 animate-pulse" />
+                      )}
                     </div>
                   </div>
                 ))}
@@ -184,13 +222,14 @@ const AIChat: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Enter command..."
-                    className="flex-1 bg-transparent border-none outline-none text-green-400 placeholder-green-500/20 text-sm font-mono"
+                    placeholder={isTyping ? "Receiveing transmission..." : "Enter command..."}
+                    disabled={isTyping}
+                    className="flex-1 bg-transparent border-none outline-none text-green-400 placeholder-green-500/20 text-sm font-mono disabled:opacity-50 disabled:cursor-wait"
                     autoFocus
                   />
                   <button
                     onClick={handleSend}
-                    disabled={!input.trim() || isThinking}
+                    disabled={!input.trim() || isThinking || isTyping}
                     className="text-green-500 hover:text-green-400 disabled:opacity-30 transition-colors"
                   >
                     <Send size={16} />

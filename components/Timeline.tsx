@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { EXPERIENCE, EDUCATION, CERTIFICATIONS } from '../constants';
-import { GitBranch, Terminal, Cpu, CheckCircle2 } from 'lucide-react';
+import { GitBranch, Terminal, Cpu, CheckCircle2, GraduationCap } from 'lucide-react';
 
 const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
   return (
@@ -146,6 +146,24 @@ const Timeline: React.FC = () => {
               </div>
             </LogEntry>
           ))}
+
+
+          {/* SEPARATOR: Experience -> Education */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative py-8 md:py-16 flex items-center justify-center z-10"
+          >
+            {/* Glowing connecting line */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-slate-800 via-primary/50 to-slate-800" />
+
+            {/* Badge */}
+            <div className="relative z-10 bg-darker border border-primary/30 px-6 py-2 rounded-full flex items-center gap-3 shadow-[0_0_15px_rgba(14,165,233,0.2)]">
+              <GraduationCap className="text-primary" size={18} />
+              <span className="text-xs md:text-sm font-bold text-white tracking-widest uppercase">Academic Kernel</span>
+            </div>
+          </motion.div>
 
           {/* 2. Engineering Degree */}
           <LogEntry
