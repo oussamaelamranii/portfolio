@@ -5,10 +5,10 @@ import { Cpu, Database, Layout, Server, Cloud, Code2, Activity } from 'lucide-re
 
 const Skills: React.FC = () => {
   return (
-    <section className="py-20 md:py-32 px-4 bg-darker relative overflow-hidden scroll-mt-10" id="skills">
-      {/* Dynamic Background Grid */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20" />
+    <section className="py-20 md:py-32 px-4 relative overflow-hidden scroll-mt-10" id="skills">
+      {/* Dynamic Background Grid - Reduced Opacity */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-10" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -17,7 +17,7 @@ const Skills: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 border-b border-slate-800 pb-6"
+          className="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 border-b border-slate-800/50 pb-6"
         >
           <div>
             <div className="flex items-center gap-2 text-primary mb-2">
@@ -46,9 +46,9 @@ const Skills: React.FC = () => {
                 viewport={{ once: true }}
                 className="h-full"
               >
-                <div className="h-full bg-[#0c0c0c] rounded-lg border border-slate-800 shadow-xl overflow-hidden flex flex-col hover:border-primary/50 transition-colors group relative">
+                <div className="h-full bg-black/40 backdrop-blur-sm rounded-lg border border-slate-800/50 shadow-xl overflow-hidden flex flex-col hover:border-primary/50 transition-colors group relative">
                   {/* Terminal Header */}
-                  <div className="bg-slate-900/90 px-3 py-2 border-b border-slate-800 flex items-center justify-between backdrop-blur-sm">
+                  <div className="bg-slate-900/50 px-3 py-2 border-b border-slate-800/50 flex items-center justify-between backdrop-blur-md">
                     <div className="flex gap-1.5">
                       <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
                       <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]" />
@@ -62,7 +62,7 @@ const Skills: React.FC = () => {
                   </div>
 
                   {/* Terminal Content */}
-                  <div className="p-4 md:p-5 flex-1 font-mono text-sm relative bg-black/40">
+                  <div className="p-4 md:p-5 flex-1 font-mono text-sm relative bg-transparent">
                     {/* Scanline Effect */}
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] z-10 pointer-events-none bg-[length:100%_2px,3px_100%] opacity-20" />
 

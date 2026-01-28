@@ -1,5 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { Toaster } from 'sonner';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
 import Timeline from './components/Timeline';
@@ -69,12 +70,32 @@ const AppContent = () => {
     setActiveSection(id);
   };
 
+  // Section Color Mapping
+  const sectionColors: Record<string, string> = {
+    'home': '#0ea5e9',      // Cyan (System)
+    'skills': '#10b981',    // Emerald (Matrix)
+    'experience': '#8b5cf6', // Violet (History)
+    'projects': '#f59e0b',  // Amber (Industrial)
+    'contact': '#f43f5e'    // Rose (Alert)
+  };
+
   return (
     <div className="min-h-screen bg-darker text-slate-200 font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden relative cursor-none pb-20 md:pb-0">
-      <CustomCursor />
+      <Helmet>
+        <title>Oussama Elamrani | Full Stack Engineer</title>
+        <meta name="description" content="Portfolio of Oussama Elamrani, a Computer Engineering Student and Full Stack Developer specializing in Microservices, Cloud, and Modern Web Tech." />
+        <meta name="keywords" content="Oussama Elamrani, Full Stack Developer, Software Engineer, Portfolio, React, Spring Boot, Microservices" />
+        <meta property="og:title" content="Oussama Elamrani | Full Stack Engineer" />
+        <meta property="og:description" content="View the portfolio of Oussama Elamrani - building the future with code." />
+        <meta property="og:type" content="website" />
+        <meta name="theme-color" content="#02040a" />
+      </Helmet>
 
-      {/* Global 3D Background */}
-      <Background />
+      <CustomCursor />
+      <Toaster position="top-right" theme="dark" closeButton richColors />
+
+      {/* Global 3D Background with Dynamic Color */}
+      <Background sectionColor={sectionColors[activeSection] || '#0ea5e9'} />
 
       {/* Command Palette */}
       <CommandPalette />
@@ -150,11 +171,13 @@ const AppContent = () => {
 
 function App() {
   return (
-    <SoundProvider>
-      <AchievementsProvider>
-        <AppContent />
-      </AchievementsProvider>
-    </SoundProvider>
+    <HelmetProvider>
+      <SoundProvider>
+        <AchievementsProvider>
+          <AppContent />
+        </AchievementsProvider>
+      </SoundProvider>
+    </HelmetProvider>
   );
 }
 

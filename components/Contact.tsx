@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { PROFILE } from '../constants';
 import { Send, Mail, MapPin, CheckCircle, Terminal, AlertCircle, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
 
 // EmailJS Configuration
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -26,7 +27,8 @@ const Contact: React.FC = () => {
 
     if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
       console.error("EmailJS Error: Missing Environment Variables");
-      alert("EmailJS Configuration Error: Please check your .env file for Service ID, Template ID, and Public Key.");
+      console.error("EmailJS Error: Missing Environment Variables");
+      toast.error("Configuration Error: Missing API keys.");
       setStatus('idle');
       return;
     }
@@ -46,17 +48,20 @@ const Contact: React.FC = () => {
 
       setStatus('sent');
       setFormState({ name: '', subject: '', message: '' });
+      setFormState({ name: '', subject: '', message: '' });
+      toast.success("Message transmitted successfully!");
       setTimeout(() => setStatus('idle'), 3000);
     } catch (error) {
       console.error("EmailJS Error:", error);
       setStatus('idle');
-      alert("Failed to send message. Please check console or try again later.");
+      toast.error("Transmission failed. Please try again.");
     }
   };
 
   return (
     <footer id="contact" className="relative pt-20 md:pt-32 pb-32 md:pb-10 px-4 overflow-hidden">
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-md border-t border-slate-800" />
+      {/* Background Gradient - Removed bg-black/80 to allow global connectivity */}
+      <div className="absolute inset-0 border-t border-slate-800/50 pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
         {/* Left: Contact Info */}
@@ -83,8 +88,8 @@ const Contact: React.FC = () => {
           </p>
 
           <div className="space-y-4 md:space-y-6">
-            <a href={`mailto:${PROFILE.email}`} className="flex items-center gap-4 p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-primary/50 hover:bg-slate-900 transition-all group">
-              <div className="p-3 bg-slate-950 rounded-lg text-primary group-hover:scale-110 transition-transform">
+            <a href={`mailto:${PROFILE.email}`} className="flex items-center gap-4 p-4 rounded-xl bg-black/40 backdrop-blur-sm border border-slate-800/50 hover:border-primary/50 hover:bg-slate-900/50 transition-all group">
+              <div className="p-3 bg-slate-950/50 rounded-lg text-primary group-hover:scale-110 transition-transform">
                 <Mail size={24} />
               </div>
               <div className="overflow-hidden">
@@ -93,8 +98,8 @@ const Contact: React.FC = () => {
               </div>
             </a>
 
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-              <div className="p-3 bg-slate-950 rounded-lg text-secondary">
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-black/40 backdrop-blur-sm border border-slate-800/50">
+              <div className="p-3 bg-slate-950/50 rounded-lg text-secondary">
                 <MapPin size={24} />
               </div>
               <div>
@@ -114,7 +119,7 @@ const Contact: React.FC = () => {
           className="relative"
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl opacity-20 blur-lg" />
-          <form onSubmit={handleSubmit} className="relative bg-slate-950 border border-slate-800 rounded-xl p-5 md:p-8 shadow-2xl">
+          <form onSubmit={handleSubmit} className="relative bg-black/60 backdrop-blur-md border border-slate-800 rounded-xl p-5 md:p-8 shadow-2xl">
             {/* Terminal Header */}
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
               <div className="flex items-center gap-2">

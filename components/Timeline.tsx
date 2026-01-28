@@ -31,10 +31,10 @@ const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
 
         {/* Content Side */}
         <div className={`w-5/12 ${index % 2 !== 0 ? 'text-right' : 'text-left'}`}>
-          <div className={`rounded-lg border border-slate-800 bg-[#0c0c0c] shadow-xl overflow-hidden hover:border-primary/50 transition-all relative group-hover:shadow-[0_0_20px_rgba(0,0,0,0.4)]`}>
+          <div className={`rounded-lg border border-slate-800 bg-black/60 backdrop-blur-sm shadow-xl overflow-hidden hover:border-primary/50 transition-all relative group-hover:shadow-[0_0_20px_rgba(0,0,0,0.4)]`}>
 
             {/* Terminal Header */}
-            <div className="bg-slate-900/90 px-3 py-2 border-b border-slate-800 flex items-center justify-between backdrop-blur-sm">
+            <div className="bg-slate-900/50 px-3 py-2 border-b border-slate-800 flex items-center justify-between backdrop-blur-md">
               <div className="flex gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]" />
@@ -68,9 +68,9 @@ const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
           <p className="text-sm text-slate-500 font-mono mt-0.5">{subtitle}</p>
         </div>
 
-        <div className="rounded-lg border border-slate-800 bg-[#0c0c0c] shadow-sm overflow-hidden">
+        <div className="rounded-lg border border-slate-800 bg-black/60 backdrop-blur-sm shadow-sm overflow-hidden">
           {/* Terminal Header Mobile */}
-          <div className="bg-slate-900/90 px-3 py-2 border-b border-slate-800 flex items-center gap-2">
+          <div className="bg-slate-900/50 px-3 py-2 border-b border-slate-800 flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-2 h-2 rounded-full bg-red-500" />
               <div className="w-2 h-2 rounded-full bg-yellow-500" />
@@ -88,8 +88,8 @@ const LogEntry = ({ children, title, subtitle, date, type, index }: any) => {
 
 const Timeline: React.FC = () => {
   return (
-    <section className="py-20 md:py-32 px-4 bg-darker relative overflow-hidden scroll-mt-10" id="experience">
-      {/* Circuit Pattern Background */}
+    <section className="py-20 md:py-32 px-4 relative overflow-hidden scroll-mt-10" id="experience">
+      {/* Circuit Pattern Background - Low Opacity */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
         backgroundImage: 'radial-gradient(#4f4f4f 1px, transparent 1px)',
         backgroundSize: '20px 20px'

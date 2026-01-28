@@ -6,9 +6,9 @@ import { ExternalLink, Zap, Globe, Server, FolderGit2, Github } from 'lucide-rea
 
 const Projects: React.FC = () => {
   return (
-    <section className="py-20 md:py-32 px-4 bg-darker relative scroll-mt-10" id="projects">
-      {/* Background Dot Grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
+    <section className="py-20 md:py-32 px-4 relative scroll-mt-10" id="projects">
+      {/* Background Dot Grid - Reduced Opacity */}
+      <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -44,7 +44,7 @@ const Projects: React.FC = () => {
               whileHover={{ y: -8, scale: 1.02 }}
               className="group h-full"
             >
-              <div className="relative h-full bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] flex flex-col">
+              <div className="relative h-full bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] flex flex-col">
 
                 {/* Glass Reflection */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-50 pointer-events-none" />

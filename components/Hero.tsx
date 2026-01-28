@@ -6,6 +6,7 @@ import { ArrowDown, Github, Linkedin, Power, Download, Check, Loader2, Terminal,
 import { useSound } from './SoundController';
 import { useAchievements } from './Achievements';
 import DecryptText from './DecryptText';
+import { toast } from 'sonner';
 
 
 const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
@@ -126,9 +127,11 @@ const Hero: React.FC = () => {
         setDownloadState('done');
         playSuccess();
         unlockAchievement('RECRUITER');
+        toast.success("Resume downloaded successfully.");
       } catch (error) {
         console.error("Download Error", error);
         setDownloadState('idle');
+        toast.error("Download failed. Please try again.");
       }
 
       setTimeout(() => setDownloadState('idle'), 2000);
