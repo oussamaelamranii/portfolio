@@ -6,18 +6,17 @@ export const generateResumePDF = () => {
   const doc = new jsPDF();
   const width = doc.internal.pageSize.width;
   const height = doc.internal.pageSize.height;
-  
+
   // Colors
   const colorGray = "#4b5563"; // slate-600
   const colorBlack = "#000000";
   const colorDarkGray = "#374151"; // slate-700
-
   // Layout Config
   const margin = 10;
   const leftColWidth = 65; // Width of left sidebar
   const rightColStart = margin + leftColWidth + 5; // Gap of 5
   const rightColWidth = width - rightColStart - margin;
-  
+
   let yLeft = 0;
   let yRight = 0;
 
@@ -29,19 +28,19 @@ export const generateResumePDF = () => {
   doc.setFontSize(24);
   doc.setTextColor(colorBlack);
   doc.text(PROFILE.name.toUpperCase(), width / 2, y, { align: "center" });
-  
+
   y += 7;
   doc.setFontSize(10);
   doc.setTextColor(colorGray);
   doc.setFont("helvetica", "normal");
   doc.text(PROFILE.title.toUpperCase(), width / 2, y, { align: "center" });
-  
+
   y += 6;
   doc.setFontSize(9);
   doc.setTextColor(colorBlack);
   const contact = `${PROFILE.phone}  |  ${PROFILE.email}  |  Mobilité : Flexible`;
   doc.text(contact, width / 2, y, { align: "center" });
-  
+
   y += 5;
   const links = `LinkedIn: Oussama Elamrani  |  GitHub: oussamaelamranii  |  ${PROFILE.location}`;
   doc.text(links, width / 2, y, { align: "center" });
@@ -50,7 +49,7 @@ export const generateResumePDF = () => {
   // Horizontal Line
   doc.setDrawColor(200, 200, 200);
   doc.line(margin, y, width - margin, y);
-  
+
   y += 5;
   yLeft = y;
   yRight = y;
@@ -61,14 +60,14 @@ export const generateResumePDF = () => {
     doc.setFontSize(12);
     doc.setTextColor(colorDarkGray);
     doc.text(text.toUpperCase(), x, currentY);
-    
+
     // Underline
     doc.setLineWidth(0.5);
     doc.setDrawColor(colorDarkGray);
     const textWidth = doc.getTextWidth(text.toUpperCase());
     // Full width line under header
     doc.line(x, currentY + 1.5, x + w, currentY + 1.5);
-    
+
     return currentY + 8;
   };
 
@@ -83,16 +82,16 @@ export const generateResumePDF = () => {
   };
 
   // --- LEFT COLUMN CONTENT ---
-  
+
   // 1. Technical Skills
   yLeft = drawSectionHeader("Technical Skills", margin, leftColWidth, yLeft);
-  
+
   SKILLS.forEach(cat => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
     doc.text(cat.name + " :", margin, yLeft);
     yLeft += 4;
-    
+
     doc.setFont("helvetica", "normal");
     const skillsStr = cat.skills.join(", ");
     const lines = doc.splitTextToSize(skillsStr, leftColWidth);
@@ -140,7 +139,7 @@ export const generateResumePDF = () => {
 
   // 1. Education
   yRight = drawSectionHeader("Education", rightColStart, rightColWidth, yRight);
-  
+
   EDUCATION.forEach(edu => {
     // Period (Right aligned)
     doc.setFontSize(9);
@@ -151,7 +150,7 @@ export const generateResumePDF = () => {
     // Degree & School
     doc.text(edu.degree, rightColStart, yRight); // Left align title
     yRight += 4;
-    
+
     doc.setFont("helvetica", "normal");
     doc.setTextColor(colorGray);
     doc.text(edu.school, rightColStart, yRight);
@@ -162,21 +161,21 @@ export const generateResumePDF = () => {
 
   // 2. Internships
   yRight = drawSectionHeader("Internships", rightColStart, rightColWidth, yRight);
-  
+
   EXPERIENCE.forEach(exp => {
     // Header Line: Title at Company ..... Date
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    
+
     const title = `${exp.title}`;
     doc.text(title.toUpperCase(), rightColStart, yRight);
-    
+
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
     const dateWidth = doc.getTextWidth(exp.period);
     doc.text(exp.period, width - margin - dateWidth, yRight);
     yRight += 5;
-    
+
     // Description
     exp.description.forEach(desc => {
       yRight = drawBullet(desc, rightColStart + 2, rightColWidth - 2, yRight);
@@ -187,26 +186,26 @@ export const generateResumePDF = () => {
 
   // 3. Projects
   yRight = drawSectionHeader("Projects", rightColStart, rightColWidth, yRight);
-  
+
   PROJECTS.forEach(proj => {
     // Title ... Year/Status
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
     doc.text(proj.title, rightColStart, yRight);
-    
-    if(proj.year || proj.status) {
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(9);
-        const meta = proj.year || proj.status || "";
-        const metaWidth = doc.getTextWidth(meta);
-        doc.text(meta, width - margin - metaWidth, yRight);
+
+    if (proj.year || proj.status) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      const meta = proj.year || proj.status || "";
+      const metaWidth = doc.getTextWidth(meta);
+      doc.text(meta, width - margin - metaWidth, yRight);
     }
     yRight += 5;
 
     // Description
     doc.setFontSize(9);
     proj.description.forEach(desc => {
-       yRight = drawBullet(desc, rightColStart + 2, rightColWidth - 2, yRight);
+      yRight = drawBullet(desc, rightColStart + 2, rightColWidth - 2, yRight);
     });
 
     // Tech
